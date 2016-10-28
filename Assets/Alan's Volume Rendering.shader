@@ -7,6 +7,8 @@ Shader "Custom/Alan's Volume Rendering" {
 	}
 	SubShader {
 		Pass {
+            Blend SrcAlpha OneMinusSrcAlpha // Traditional transparency
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -23,19 +25,23 @@ Shader "Custom/Alan's Volume Rendering" {
 
             #define STEPS 64
             #define STEP_SIZE 0.01
+            #define MIN_DISTANCE 0.0001
 
-            bool sphereHit(float3 p) {
-                return distance(p, _Centre) < _Radius;
+            float sphereDistance(float3 p) {
+                return distance(p, _Centre) - _Radius;
             }
             
-            bool raymarchHit(float3 position, float3 direction) {
+            fixed4 raymarch(float3 position, float3 direction) {
                 for (int i = 0; i < STEPS; i++) {
-                    if (sphereHit(position))
-                        return true;
-                    position += direction * STEP_SIZE;
+                    float distance = sphereDistance(position);
+                    if (distance < MIN_DISTANCE) {
+                        fixed f = i / (float) STEPS;
+                        return fixed4(f, 0, 0, 1);
+                    }
+                    position += direction * distance;
                 }
 
-                return false;
+                return 0;
             }
 
             v2f vert(appdata_full v) {
@@ -48,10 +54,7 @@ Shader "Custom/Alan's Volume Rendering" {
             fixed4 frag(v2f i) : SV_Target {
                 float3 worldPosition = i.wPos;
                 float3 viewDirection = normalize(i.wPos - _WorldSpaceCameraPos);
-                if (raymarchHit(worldPosition, viewDirection))
-                    return fixed4(1,0,0,1); // Red if hit the ball
-                else
-                    return fixed4(1,1,1,1); // White otherwise
+                return raymarch(worldPosition, viewDirection);
             }
 			ENDCG
 		}
