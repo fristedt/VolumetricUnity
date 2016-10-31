@@ -28,6 +28,6 @@ public class RenderMaterialFullscreen : MonoBehaviour {
         cb.ReleaseTemporaryRT(lowResRenderTarget);
 
         // Tell the camera to execute our CommandBuffer before the forward opaque pass - that is, just before normal geometry starts rendering
-        this.GetComponent<Camera>().AddCommandBuffer(CameraEvent.BeforeForwardOpaque, cb);
+        this.GetComponent<Camera>().AddCommandBuffer(CameraEvent.AfterForwardOpaque, cb);
     }
 }

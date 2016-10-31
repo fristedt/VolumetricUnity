@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Skybox
+  m_Shader: {fileID: 4800000, guid: c587f594429d3d343b02c8e05116c459, type: 3}
+  m_ShaderKeywords: _EMISSION _SUNDISK_HIGH_QUALITY
+  m_LightmapFlags: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs: []
+    m_Floats:
+    - first:
+        name: _SkyExponent1
+      second: 2
+    - first:
+        name: _SkyIntensity
+      second: 1
+    - first:
+        name: _SunIntensity
+      second: 10
+    m_Colors:
+    - first:
+        name: _MoonVector
+      second: {r: 0.269, g: 0.615, b: 0.74, a: 0}
+    - first:
+        name: _SkyColor1
+      second: {r: 0.37, g: 0.52, b: 0.73, a: 0}
+    - first:
+        name: _SkyColor2
+      second: {r: 0.89, g: 0.96, b: 1, a: 0}
+    - first:
+        name: _SunColor
+      second: {r: 1, g: 0.99, b: 0.87, a: 1}
